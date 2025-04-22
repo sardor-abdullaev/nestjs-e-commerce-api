@@ -1,4 +1,8 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  OnApplicationBootstrap,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -37,5 +41,39 @@ export class UsersService implements OnApplicationBootstrap {
     } else {
       console.log('Default admin user already exists.');
     }
+  }
+
+  create(login: string, password: string) {
+    const user = this.userRepo.create({ login, password });
+    return this.userRepo.save(user);
+  }
+
+  findOne(id: string) {
+    if (!id) {
+      return null;
+    }
+    return this.userRepo.findOneBy({ id });
+  }
+
+  async update(id: string, attr: Partial<User>) {
+    const user = await this.userRepo.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException('user not found');
+    }
+
+    Object.assign(user, attr);
+    return this.userRepo.save(user);
+  }
+
+  async remove(id: string) {
+    const user = await this.userRepo.findBy({ id });
+    if (!user) {
+      throw new NotFoundException('user not found');
+    }
+    return this.userRepo.remove(user);
+  }
+
+  async findByLogin(login: string): Promise<User | null> {
+    return this.userRepo.findOne({ where: { login } });
   }
 }
