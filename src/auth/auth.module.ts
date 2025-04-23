@@ -9,15 +9,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   controllers: [AuthController],
   providers: [AuthService],
   imports: [
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_ACCESS_SECRET'),
-        signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') },
-      }),
-    }),
+    // JwtModule.registerAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     secret: configService.get('JWT_ACCESS_SECRET'),
+    //     signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') },
+    //   }),
+    // }),
+    JwtModule.register({}),
     UsersModule,
+    ConfigModule,
   ],
 })
 export class AuthModule {}
