@@ -39,12 +39,12 @@ export class UsersController {
 
   // User can update their own profile
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdateUserDto, @Request() req) {
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @Request() req) {
     const user = req.user;
     if (user.id !== id) {
       throw new ForbiddenException('You can only update your own profile');
     }
-    return this.usersService.update(id, dto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   // Admin or user themselves can delete their account
