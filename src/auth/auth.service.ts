@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../users/user.entity';
 import { JwtPayload } from './jwt-payload.interface';
 import { ConfigService } from '@nestjs/config';
-import { UserCredentialsDto } from 'src/users/dto/user-credentials.dto';
+import { UserCredentialsDto } from '../users/dto/user-credentials.dto';
 import { plainToInstance } from 'class-transformer';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 

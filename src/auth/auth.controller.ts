@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserCredentialsDto } from 'src/users/dto/user-credentials.dto';
-import { User } from 'src/users/user.entity';
+import { UserCredentialsDto } from '../users/dto/user-credentials.dto';
+import { User } from '../users/user.entity';
 import { Response } from 'express';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 
