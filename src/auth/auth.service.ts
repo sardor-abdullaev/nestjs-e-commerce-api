@@ -19,7 +19,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   // Register new user
   async register(userCredentialsDto: UserCredentialsDto): Promise<User> {
@@ -32,7 +32,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.usersService.create(login, hashedPassword);
 
-    return plainToInstance(User, user);
+    return user;
   }
 
   // Login user

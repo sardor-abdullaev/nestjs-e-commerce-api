@@ -15,7 +15,7 @@ export class UsersService implements OnApplicationBootstrap {
     @InjectRepository(User)
     private userRepo: Repository<User>,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async onApplicationBootstrap() {
     await this.createDefaultAdmin();
@@ -55,6 +55,14 @@ export class UsersService implements OnApplicationBootstrap {
     return this.userRepo.findOneBy({ id });
   }
 
+  findByLogin(login: string): Promise<User | null> {
+    return this.userRepo.findOne({ where: { login } });
+  }
+
+  async findAll() {
+    return this.userRepo.find();
+  }
+
   async update(id: string, attr: Partial<User>) {
     const user = await this.userRepo.findOneBy({ id });
     if (!user) {
@@ -73,7 +81,5 @@ export class UsersService implements OnApplicationBootstrap {
     return this.userRepo.remove(user);
   }
 
-  async findByLogin(login: string): Promise<User | null> {
-    return this.userRepo.findOne({ where: { login } });
-  }
+
 }

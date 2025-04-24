@@ -7,7 +7,7 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/register')
   register(@Body() userCredentialsDto: UserCredentialsDto): Promise<User> {
@@ -21,7 +21,7 @@ export class AuthController {
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const { accessToken, refreshToken } =
       await this.authService.login(userCredentialsDto);
-    res.cookie('jwt', accessToken);
+    res.cookie('jwt', accessToken, { httpOnly: true });
 
     return { accessToken, refreshToken };
   }
