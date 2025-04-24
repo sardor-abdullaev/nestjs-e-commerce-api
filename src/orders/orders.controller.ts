@@ -18,7 +18,9 @@ import { CreateOrderDto } from './dto/create-order.dto';
 export class OrdersController {
     constructor(private ordersService: OrdersService) { }
 
+    @UseGuards(RolesGuard)
     @Post()
+    @Roles('user')
     create(@Body() createOrderDto: CreateOrderDto, @Request() req) {
         return this.ordersService.createOrder(createOrderDto, req.user);
     }
@@ -30,7 +32,9 @@ export class OrdersController {
         return this.ordersService.findAll();
     }
 
+    @UseGuards(RolesGuard)
     @Get('user/:id')
+    @Roles('admin')
     findByUser(@Param('id') id: string, @Request() req) {
         if (req.user.id !== id && req.user.role !== 'admin') {
             throw new Error('Unauthorized');
